@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUIDEBOOK JEABDOOKDUI (คู่มือบอท)</title>
+    <!-- Google Fonts: Prompt (Thai/Body) & Chakra Petch (Gamer/Header) -->
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Prompt:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* BASE & THEME SETUP */
+        :root {
+            --color-bg-primary: #020617; /* Deep Blue/Black */
+            --color-card-bg: rgba(15, 23, 42, 0.9); /* Dark Gray/Blue Translucent */
+            --color-text-light: #e2e8f0;
+            --color-text-muted: #94a3b8;
+            --color-accent-purple: #a855f7;
+            --color-accent-cyan: #22d3ee;
+            --color-accent-green: #22c55e;
+            --color-border: #334155;
+            --shadow-glow: 0 0 15px rgba(34, 211, 238, 0.2), 0 0 5px rgba(168, 85, 247, 0.3);
+            --shadow-hover: 0 5px 20px rgba(34, 211, 238, 0.2);
+            --font-header: 'Chakra Petch', sans-serif;
+            --font-body: 'Prompt', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: all 0.2s ease-in-out;
+        }
+
+        body {
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-light);
+            font-family: var(--font-body);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            padding: 40px 0;
+            min-height: 100vh;
+        }
+
+        /* TYPOGRAPHY */
+        h1, h2, h3 {
+            font-family: var(--font-header);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 7vw, 5rem);
+            font-weight: 700;
+            letter-spacing: 2px;
+            line-height: 1.1;
+            background: linear-gradient(90deg, var(--color-accent-cyan), var(--color-accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+
+        h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 600;
+            color: var(--color-accent-cyan);
+            margin-bottom: 25px;
+            border-left: 5px solid var(--color-accent-purple);
+            padding-left: 15px;
+        }
+
+        h3 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 500;
+            color: var(--color-text-light);
+            margin-bottom: 10px;
+        }
+
+        p, ul, li, td {
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            line-height: 1.6;
+            color: var(--color-text-light);
+        }
+
+        /* SLIDE CONTAINER & LAYOUT */
+        .slide-container {
+            width: min(1280px, 98% - 32px); /* Responsive width */
+            padding: clamp(2rem, 5vw, 3.5rem);
+            background-color: var(--color-card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--color-border);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7), var(--shadow-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* HUD Grid Overlay */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: linear-gradient(0deg, transparent 99%, var(--color-border) 100%), linear-gradient(90deg, transparent 99%, var(--color-border) 100%);
+            background-size: 50px 50px;
+            opacity: 0.05;
+            pointer-events: none;
+        }
+        
+        /* GENERAL LAYOUTS */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        /* Responsive Grid Collapse */
+        @media (max-width: 900px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* COMPONENTS */
+
+        /* Highlight Box (Price/Tagline) */
+        .highlight-box {
+            background-color: rgba(168, 85, 247, 0.1);
+            border-left: 5px solid var(--color-accent-purple);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .highlight-box p {
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            font-weight: 500;
+            color: #fff;
+        }
+
+        /* Tiles/Cards for Categories/Features */
+        .tiled-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .tile {
+            background-color: rgba(30, 41, 59, 0.7);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--color-border);
+            text-align: center;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .tile:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-accent-cyan);
+            box-shadow: var(--shadow-hover);
+        }
+        .tile .icon {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--color-accent-purple);
+            margin-bottom: 10px;
+        }
+        .tile h3 {
+            margin: 0;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--color-accent-cyan);
+        }
+        .tile p {
+            font-size: clamp(0.8rem, 1.8vw, 0.95rem);
+            color: var(--color-text-muted);
+            margin-top: 5px;
+        }
+
+        /* Lists and Bullets */
+        .styled-list ul {
+            list-style: none;
+            padding: 0;
+        }
+        .styled-list li {
+            padding: 10px 0;
+            position: relative;
+            padding-left: 30px;
+            border-bottom: 1px dashed var(--color-border);
+            color: var(--color-text-light);
+        }
+        .styled-list li:last-child {
+            border-bottom: none;
+        }
+        .styled-list li::before {
+            content: '\f058'; /* Check Circle */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            color: var(--color-accent-green);
+            position: absolute;
+            left: 0;
+            top: 10px;
+        }
+
+        /* Tables (HUD Style) */
+        .data-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+        .data-table th, .data-table td {
+            padding: 15px;
+            text-align: left;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+        }
+        .data-table th {
+            color: var(--color-accent-cyan);
+            border-bottom: 2px solid var(--color-accent-purple);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .data-table td {
+            background-color: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+        }
+        .data-table td:first-child {
+            font-weight: 600;
+            color: var(--color-accent-purple);
+        }
+
+        /* Flow Diagram (Slide 3 & 18) */
+        .flow-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .flow-step {
+            flex: 1;
+            padding: 15px 5px;
+            background-color: rgba(34, 211, 238, 0.1);
+            border: 2px solid var(--color-accent-cyan);
+            border-radius: 8px;
+            font-weight: 700;
+            color: var(--color-text-light);
+            position: relative;
+            font-size: clamp(0.7rem, 1.5vw, 1rem);
+        }
+        .flow-arrow {
+            color: var(--color-accent-purple);
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            margin: 0 5px;
+        }
+        @media (max-width: 700px) {
+            .flow-diagram {
+                flex-direction: column;
+            }
+            .flow-arrow {
+                transform: rotate(90deg);
+                margin: 10px 0;
+            }
+        }
+
+        /* Special Styling for Config/Rule Boxes */
+        .rule-box {
+            background-color: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--color-accent-purple);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .rule-box code {
+            display: inline-block;
+            background-color: var(--color-bg-primary);
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: var(--color-accent-cyan);
+            font-family: monospace;
+        }
+
+        /* Contact/Footer Styles */
+        .contact-info {
+            text-align: center;
+            padding: 30px;
+        }
+        .contact-link {
+            display: inline-block;
+            background-color: var(--color-accent-purple);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-family: var(--font-header);
+            margin: 10px;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            border: 2px solid var(--color-accent-purple);
+        }
+        .contact-link:hover {
+            background-color: #7c3aed;
+            border-color: #c084fc;
+            box-shadow: 0 0 15px var(--color-accent-purple);
+        }
+        .placeholder-text {
+            color: var(--color-accent-green);
+            font-style: italic;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
+            margin-bottom: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: หน้าปก -->
+<div class="slide-container" id="slide1" style="text-align: center;">
+    <span style="color:var(--color-accent-cyan); font-family:var(--font-header); font-size:clamp(1rem, 3vw, 1.5rem);">LINE RANGERS BOT SYSTEM V.2024</span>
+    <h1>GUIDEBOOK JEABDOOKDUI</h1>
+    <h2 style="color:var(--color-accent-purple); margin-bottom: 0;">คู่มือบอทรีไอดี LINE Rangers</h2>
+    <h3 style="color:var(--color-text-muted); margin-top: 10px;">500 บาท/เดือน ใช้ได้ไม่จำกัดเครื่อง</h3>
+
+    <div class="highlight-box" style="width: 80%; margin: 30px auto;">
+        <p style="font-family:var(--font-header); letter-spacing: 1px;">“จัดการไอดีเป็นร้อย… โดยที่คุณไม่ต้องแตะเม้าส์”</p>
+    </div>
+</div>
+
+<!-- Slide 2: ภาพรวมบอท & จุดเด่น -->
+<div class="slide-container" id="slide2">
+    <h2>ภาพรวมบอท & จุดเด่น</h2>
+    <p>JEABDOOKDUI คือระบบบอทอัตโนมัติสำหรับเกม LINE Rangers ที่ช่วยจัดการไอดีจำนวนมากแบบมืออาชีพ เพื่อให้คุณประหยัดเวลาและเพิ่มประสิทธิภาพในการฟาร์ม</p>
+
+    <div class="highlight-box">
+        <h3>💰 ราคาและสิทธิ์การใช้งาน</h3>
+        <p style="color:var(--color-accent-cyan);">✅ <strong style="font-size:1.2em;">500 บาท/เดือน</strong> | ✅ ไม่จำกัดจำนวนเครื่อง | ✅ ไม่จำกัดจำนวน Emulator| ⚠️ ราคาอาจะปรับเปลี่ยนได้ตลอด</p>
+    </div>
+
+    <h3 style="color:var(--color-accent-purple); margin-top: 30px;">5 หมวดหมู่หลัก</h3>
+    <div class="tiled-content">
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+            <h3>AutoLogin</h3>
+            <p>จัดการล็อคอิน เก็บของรายวัน, 7Days, Pass, ลิงก์กิจกรรม</p>
+        </div>
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-dice"></i></div>
+            <h3>Login to Random</h3>
+            <p>เข้าไอดีไปสุ่มตัวละครแบบอัตโนมัติ ตามจำนวนครั้งหรือเงื่อนไข</p>
+        </div>
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-rotate"></i></div>
+            <h3>BOT REID</h3>
+            <p>ระบบรีไอดี ฟาร์มไอดีตัวและเกียร์ พร้อมโหมดสร้างไอดีใหม่</p>
+        </div>
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h3>BOTGEAR</h3>
+            <p>โหมดสุ่มเกียร์เน้นๆ รองรับทั้งปกติ, พาส และกิจกรรม URL</p>
+        </div>
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+            <h3>Utilities</h3>
+            <p>เครื่องมือเสริม เช่น ใส่ UID ในชื่อไฟล์, เชื่อมต่อ ADB, จัดการไฟล์</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: โครงสร้างเมนูหลัก & Workflow -->
+<div class="slide-container" id="slide3">
+    <h2>โครงสร้างเมนูหลัก & Workflow</h2>
+    <p>การทำงานของบอทถูกออกแบบมาให้เป็นไปตามขั้นตอนที่เรียบง่าย ดังนี้:</p>
+
+    <div class="flow-diagram">
+        <div class="flow-step">1. เลือกหมวดหลัก</div>
+        <i class="fa-solid fa-arrow-right flow-arrow"></i>
+        <div class="flow-step">2. เลือกฟังก์ชันย่อย</div>
+        <i class="fa-solid fa-arrow-right flow-arrow"></i>
+        <div class="flow-step">3. เตรียมไฟล์ไอดี & ตั้งค่า</div>
+        <i class="fa-solid fa-arrow-right flow-arrow"></i>
+        <div class="flow-step">4. รันบอทพร้อมกันทุก Emulator</div>
+        <i class="fa-solid fa-arrow-right flow-arrow"></i>
+        <div class="flow-step">5. ตรวจผลลัพธ์ (Success/Fail)</div>
+    </div>
+    
+    <h3 style="color:var(--color-accent-purple); margin-top: 40px;">รายละเอียดการเลือก</h3>
+    <div class="styled-list">
+        <ul>
+            <li>**เลือกหมวดหลัก** (เช่น AutoLogin) เพื่อเข้าถึงชุดคำสั่งที่ต้องการ</li>
+            <li>**เลือกฟังก์ชันย่อย** (เช่น AutoLogin URL Normal) ตามงานที่ต้องการให้บอททำ</li>
+            <li>**รันบอท** บอทจะเริ่มทำงานกับไอดีทั้งหมดที่เตรียมไว้บน Emulator ที่เชื่อมต่อพร้อมกัน</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 4: หมวด AutoLogin (ภาพรวม) -->
+<div class="slide-container" id="slide4">
+    <h2>หมวด AutoLogin </h2>
+    <div class="content-grid">
+        <div>
+            <p>AutoLogin คือหมวดจัดการล็อคอินไอดีจำนวนมากแบบอัตโนมัติ ช่วยเก็บของและทำกิจวัตรประจำวันที่ต้องทำซ้ำๆ ในทุกไอดี</p>
+            <h3 style="color:var(--color-accent-purple); margin-top: 20px;"><i class="fa-solid fa-user-check"></i> เหมาะสำหรับ:</h3>
+            <div class="styled-list">
+                <ul>
+                    <li>เก็บของรายวันจากจดหมาย (Mail)</li>
+                    <li>เปิด 7Days เช็คชื่อรับของและสะสมเวลา</li>
+                    <li>รับของใน Pass สำหรับไอดีที่เติมไว้</li>
+                    <li>รับของจากลิงก์กิจกรรม / ตั๋ว / บี้ ที่เกมแจก</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>โหมด</th>
+                        <th>ใช้เมื่อไหร่ดี</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AutoLogin (Fast)</td>
+                        <td>เช็คสถานะไอดี/ความพร้อมของ Emulator</td>
+                    </tr>
+                    <tr>
+                        <td>AutoLogin (Normal)</td>
+                        <td>เก็บของรายวันพื้นฐานจาก กล่องจดหมาย</td>
+                    </tr>
+                    <tr>
+                        <td>AutoLogin (Takepass)</td>
+                        <td>รับรางวัล Battle Pass ทั้งหมด</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 5: AutoLogin รายละเอียดปุ่ม (1/2) -->
+<div class="slide-container" id="slide5">
+    <h2>AutoLogin: ฟังก์ชันพื้นฐาน (1/2)</h2>
+    <div class="content-grid">
+        <div style="grid-column: span 2;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Function</th>
+                        <th>คำอธิบาย</th>
+                        <th style="width: 25%;">การใช้งาน</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[01] AutoLogin (Fast)</td>
+                        <td>ล็อคอินแล้วออกแบบไวทันที</td>
+                        <td>เช็คสถานะไอดีเร็วๆ</td>
+                    </tr>
+                    <tr>
+                        <td>[02] AutoLogin (Normal)</td>
+                        <td>ล็อคอินแล้วรับของในจดหมายทั้งหมด</td>
+                        <td>ใช้เก็บของรายวันจาก กล่องจดหมาย</td>
+                    </tr>
+                    <tr>
+                        <td>[03] AutoLogin (Fast7Days)</td>
+                        <td>ล็อคอินแล้วกดเปิด 7Days อย่างเดียว เน้นสะสมเวลาเร็วๆ</td>
+                        <td>เน้นสะสมเวลา 7Days</td>
+                    </tr>
+                    <tr>
+                        <td>[04] AutoLogin (7Days)</td>
+                        <td>เปิด 7Days + รับของใน 7Days + รับของในจดหมาย</td>
+                        <td>เคลียร์ทุกอย่างจบในครั้งเดียว</td>
+                    </tr>
+                    <tr>
+                        <td>[05] AutoLogin (Takepass)</td>
+                        <td>ล็อคอินไปรับของในพาสทั้งหมด</td>
+                        <td>เก็บของจาก Pass หลายไอดี</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: AutoLogin รายละเอียดปุ่ม (2/2) -->
+<div class="slide-container" id="slide6">
+    <h2>AutoLogin: ฟังก์ชันพิเศษ & URL (2/2)</h2>
+    <div class="content-grid">
+        <div style="grid-column: span 2;">
+             <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Function</th>
+                        <th>คำอธิบาย</th>
+                        <th style="width: 25%;">การใช้งาน</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[06/07] Login to Stop</td>
+                        <td>เข้าไอดีแบบไวไปหยุดที่หน้าหลักเกม (v2 มี autosetup ในตัว)</td>
+                        <td>เตรียมไอดีไว้เช็คตัว/ขาย</td>
+                    </tr>
+                    <tr>
+                        <td>[08] AutoLogin URL (Fast)</td>
+                        <td>ล็อคอินรับ “ลิงก์กิจกรรม / ลิงก์ตั๋ว” ที่เกมแจก แล้วออกเลย</td>
+                        <td>รับลิงก์กิจกรรม เน้นเร็ว</td>
+                    </tr>
+                    <tr>
+                        <td>[09] AutoLogin URL (Normal)</td>
+                        <td>ล็อคอินรับลิงก์กิจกรรม + รับของในจดหมาย</td>
+                        <td>เคลียร์ทั้งลิงก์และรับของในกล่องจดหมาย ในรอบเดียว</td>
+                    </tr>
+                    <tr>
+                        <td>[10] Trade tricket (Mpoints)</td>
+                        <td>เอาแต้มสุ่มกาชามาแลกเป็นตั๋วอัตโนมัติ</td>
+                        <td>รีเซ็ตแต้ม Mpoints เป็นตั๋ว</td>
+                    </tr>
+                    <tr>
+                        <td>[98] Autosetup mumu</td>
+                        <td>ฟังก์ชันตั้งค่า MuMu สำหรับใช้คู่กับ Login to Stop v1</td>
+                        <td>การตั้งค่าที่จำเป็น</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: หมวด Login to Random (ภาพรวม) -->
+<div class="slide-container" id="slide7">
+    <h2 style="color:var(--color-accent-purple);"><i class="fa-solid fa-dice"></i> หมวด Login to Random</h2>
+    <div class="content-grid">
+        <div>
+            <p>หมวดนี้ใช้สำหรับเข้าไอดีไป **สุ่มตัวละคร** แบบอัตโนมัติ สามารถตั้งจำนวนครั้งหรือเงื่อนไขการหยุดได้ เพื่อเพิ่มโอกาสในการได้ตัวละครที่ต้องการ</p>
+            <h3 style="color:var(--color-accent-cyan); margin-top: 20px;">ใช้งานเมื่อ:</h3>
+            <div class="styled-list">
+                <ul>
+                    <li>ต้องการฟาร์มตัวละครจากตั๋ว/บี้ที่มีในไอดี</li>
+                    <li>ต้องการใช้ลิงก์กิจกรรมที่แจกตั๋ว แล้วให้บอทสุ่มให้เลย</li>
+                    <li>ต้องการสุ่มหาตัวละครที่กำหนดไว้ (OneRanger)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="highlight-box">
+            <p style="text-align: center;"><i class="fa-solid fa-bullseye" style="font-size: 3em; color:var(--color-accent-cyan);"></i></p>
+            <p style="text-align: center; font-weight: bold;">ปลดปล่อยพลัง Gacha Hunter ให้ทำงาน<br>แทนคุณ</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 8: Login to Random รายละเอียดปุ่ม -->
+<div class="slide-container" id="slide8">
+    <h2>Login to Random: โหมดการสุ่ม</h2>
+    <div class="tiled-content" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <div class="tile" style="text-align: left;">
+            <div class="icon"><i class="fa-solid fa-dice-one"></i></div>
+            <h3>[01] Normal</h3>
+            <p>ล็อคอินเข้าไปสุ่มตัวละครทั่วไป</p>
+        </div>
+        <div class="tile" style="text-align: left;">
+            <div class="icon"><i class="fa-solid fa-calendar-days"></i></div>
+            <h3>[02] 7 Days</h3>
+            <p>เข้าไปรับของใน 7Days ก่อน แล้วค่อยไปสุ่ม</p>
+        </div>
+        <div class="tile" style="text-align: left;">
+            <div class="icon"><i class="fa-solid fa-hashtag"></i></div>
+            <h3>[03] Count_Random</h3>
+            <p>สุ่มตัวละคร **ตามจำนวนที่กำหนด** เช่น 3 ครั้งแล้วหยุด</p>
+        </div>
+        <div class="tile" style="text-align: left; background-color: rgba(168, 85, 247, 0.2);">
+            <div class="icon" style="color:var(--color-accent-green);"><i class="fa-solid fa-user-secret"></i></div>
+            <h3>[05] OneRanger</h3>
+            <p>สุ่มต่อจนกว่าจะเจอ **ตัวที่กำหนดไว้ 1 ตัว** แล้วหยุดทันที</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 9: หมวด BOTREID (ภาพรวม) -->
+<div class="slide-container" id="slide9">
+    <h2 style="color:var(--color-accent-green);"><i class="fa-solid fa-rotate"></i> หมวด BOT REID (RE-ID SYSTEM)</h2>
+    <div class="content-grid">
+        <div>
+            <p>BOTREID คือหมวดสำหรับ **สายรีไอดีตัวจริง** ใช้ฟาร์มไอดีตัวละคร, ฟาร์มเกียร์ และสร้างไอดีใหม่แบบอัตโนมัติ พร้อม Logic ในการตัดสินใจเก็บ/ลบ</p>
+            <h3 style="color:var(--color-accent-purple); margin-top: 20px;">Logic การทำงาน:</h3>
+            <div class="styled-list">
+                <ul>
+                    <li>**ถ้าเจอตัวที่ตั้งไว้:** เก็บไอดีนั้นไว้ให้คุณ</li>
+                    <li>**ถ้าไม่เจอ:** ลบไอดีนั้นทิ้งทันที หรือเก็บเป็นไอดีเปล่า (ตามคำสั่ง)</li>
+                </ul>
+            </div>
+        </div>
+        <div class="tiled-content" style="grid-template-columns: 1fr 1fr;">
+            <div class="tile"><h3>REID (ตัวละคร)</h3></div>
+            <div class="tile"><h3>REGEAR (เกียร์)</h3></div>
+            <div class="tile"><h3>GENID (สร้างใหม่)</h3></div>
+            <div class="tile"><h3>REID+GENID (ผสมผสาน)</h3></div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 10: BOTREID รายละเอียดปุ่ม -->
+<div class="slide-container" id="slide10">
+    <h2>BOT REID: รูปแบบการทำงาน</h2>
+    <div class="content-grid">
+        <div style="grid-column: span 2;">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">Mode</th>
+                        <th>คำอธิบาย</th>
+                        <th style="width: 20%;">ผลลัพธ์</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>[01] REID</td>
+                        <td>รีไอดีตัวละครทั่วไป</td>
+                        <td>เจอ=เก็บ / ไม่เจอ=ลบทิ้ง</td>
+                    </tr>
+                    <tr>
+                        <td>[02] GENID</td>
+                        <td>สร้างตัวละครใหม่ เล่นด่านถึง Lv.3 (ไม่สุ่ม)</td>
+                        <td>เก็บไอดีเปล่าไว้ทำอย่างอื่นต่อ</td>
+                    </tr>
+                    <tr>
+                        <td>[03] REID+GENID</td>
+                        <td>รีไอดีตัวละคร **ถ้าไม่เจอไม่ลบทิ้ง**</td>
+                        <td>เก็บไอดีแยกไว้ใช้งานทีหลัง</td>
+                    </tr>
+                    <tr>
+                        <td>[04] REGEAR</td>
+                        <td>รีไอดีเกียร์ทั่วไป</td>
+                        <td>เจอ=เก็บ / ไม่เจอ=ลบทิ้ง</td>
+                    </tr>
+                    <tr>
+                        <td>[05] REGEAR+GENID</td>
+                        <td>รีไอดีเกียร์ **ถ้าไม่เจอไม่ลบทิ้ง**</td>
+                        <td>เก็บไอดีแยกไว้ใช้งานทีหลัง</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 11: หมวด BOTGEAR -->
+<div class="slide-container" id="slide11">
+    <h2 style="color:var(--color-accent-cyan);"><i class="fa-solid fa-gear"></i> หมวด BOTGEAR (GEAR GACHA)</h2>
+    <p>BOTGEAR คือหมวดสุ่มเกียร์โดยเฉพาะ เหมาะสำหรับคนที่ต้องการปั่นเกียร์จากไอดีจำนวนมาก</p>
+
+    <div class="tiled-content" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 30px;">
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-gear"></i></div>
+            <h3>[01] BOTGEAR (Normal)</h3>
+            <p>เข้าไอดี → ไปสุ่มเกียร์ธรรมดา</p>
+        </div>
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-ticket"></i></div>
+            <h3>[02] BOTGEAR (Takepass)</h3>
+            <p>เข้าไอดี → รับของในพาสก่อน → แล้วไปสุ่มเกียร์</p>
+        </div>
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-link"></i></div>
+            <h3>[03] BOTGEAR (URL)</h3>
+            <p>เข้าไอดี → รับลิงก์กิจกรรมที่เกี่ยวกับเกียร์ → แล้วไปสุ่มเกียร์</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 12: หมวด UTILITIES – เครื่องมือเสริม -->
+<div class="slide-container" id="slide12">
+    <h2 style="color:var(--color-accent-purple);"><i class="fa-solid fa-screwdriver-wrench"></i> UTILITIES – เครื่องมือเสริม</h2>
+    <p>เครื่องมือที่ช่วยให้การจัดการไฟล์ไอดีและ Emulator เป็นเรื่องง่ายดายและเป็นระบบมากขึ้น</p>
+
+    <div class="tiled-content" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); margin-top: 30px;">
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-file-signature"></i></div>
+            <h3>Add UID in IDFiles.</h3>
+            <p>ใส่ UID เข้าไปในชื่อไฟล์ ID ช่วยให้จำไอดีง่ายขึ้น</p>
+        </div>
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-network-wired"></i></div>
+            <h3>ADB CONNECT BY JACKZ2</h3>
+            <p>ตัวเชื่อมต่อ ADB แบบอัตโนมัติ ช่วยให้บอทมองเห็น Emulator</p>
+        </div>
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-sort-alpha-up"></i></div>
+            <h3>Change Files name xml/txt</h3>
+            <p>เปลี่ยนชื่อไฟล์ให้เรียง 001, 002, 003... นำหน้า</p>
+        </div>
+        <div class="tile">
+            <div class="icon"><i class="fa-solid fa-shuffle"></i></div>
+            <h3>Random Files xml/txt</h3>
+            <p>สุ่มไฟล์สำหรับขายหรือแจก (มีระบบบีบอัดไฟล์อัตโนมัติ)</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 13: การตั้งค่า Config.ini (ภาพรวม) -->
+<div class="slide-container" id="slide13">
+    <h2><i class="fa-solid fa-sliders"></i> ไฟล์ Config.ini – ตั้งค่าพฤติกรรมของบอท</h2>
+    <p>ไฟล์ `Config.ini` อยู่ในโฟลเดอร์ `bin` ใช้สำหรับตั้งค่าการทำงานของบอท เช่น ประสิทธิภาพ, การสแกน OCR, และเงื่อนไขการสุ่ม</p>
+
+    <div class="rule-box" style="border-color: #ef4444; background-color: rgba(239, 68, 68, 0.1);">
+        <h3 style="color: #ef4444;"><i class="fa-solid fa-exclamation-triangle"></i> คำเตือน: ข้อควรจำ!</h3>
+        <p>ทุกครั้งที่แก้ไขค่าใน <code>Config.ini</code> ให้ **ปิดบอทแล้วเปิดใหม่** เสมอ เพื่อให้ค่าที่เปลี่ยนมีผลต่อการทำงาน</p>
+    </div>
+    
+    <h3 style="color:var(--color-accent-cyan);">ตัวอย่าง Header:</h3>
+    <pre class="rule-box"><code>[SETTINGS]</code></pre>
+</div>
+
+<!-- Slide 14: รายละเอียดค่าใน Config.ini (1/2) - ประสิทธิภาพ -->
+<div class="slide-container" id="slide14">
+    <h2>Config.ini: การตั้งค่าประสิทธิภาพ (1/2)</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th style="width: 25%;">คีย์ (Key)</th>
+                <th>ความหมาย / การใช้งาน</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>autoStart=0</code></td>
+                <td>ทำงานอัตโนมัติเมื่อเปิด MuMu จอใหม่ (0 = ปิด, 1 = เปิด)</td>
+            </tr>
+            <tr>
+                <td><code>BootBOT=2</code></td>
+                <td>เพิ่มประสิทธิภาพบอท/จำนวน Thread ภายใน (เครื่องแรงตั้ง 4-8 ได้)</td>
+            </tr>
+            <tr>
+                <td><code>upgradeOCR=1</code></td>
+                <td>เปิดโหมด OCR อัปเกรด (ใช้ GPU แทน CPU) *ต้องติดตั้ง CUDA Toolkit*</td>
+            </tr>
+            <tr>
+                <td><code>log_scan=0</code></td>
+                <td>แสดง Log การสแกนละเอียด (ใช้สำหรับ Debug) (0 = ไม่โชว์, 1 = โชว์)</td>
+            </tr>
+            <tr>
+                <td><code>log_succes=1</code></td>
+                <td>แสดงเฉพาะผลสแกนที่สำเร็จ หรือเจอเป้าหมายที่ตั้งไว้</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Slide 15: รายละเอียดค่าใน Config.ini (2/2) - การสุ่ม -->
+<div class="slide-container" id="slide15">
+    <h2>Config.ini: การตั้งค่าสุ่มและเงื่อนไข (2/2)</h2>
+    <div class="content-grid">
+        <div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">คีย์ (Key)</th>
+                        <th>ความหมาย</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>count_random=1</code></td>
+                        <td>จำนวนครั้งในการสุ่มสำหรับโหมด Count_Random</td>
+                    </tr>
+                    <tr>
+                        <td><code>gachaselect=2</code></td>
+                        <td>เลือกตู้กาชาที่จะสุ่ม (แนะนำ 1–3)</td>
+                    </tr>
+                    <tr>
+                        <td><code>herowant=4</code></td>
+                        <td>จำนวนชื่อฮีโร่ที่ต้องการสแกน (กำหนดได้ถึง 4)</td>
+                    </tr>
+                    <tr>
+                        <td><code>gearwant=4</code></td>
+                        <td>จำนวนชื่อเกียร์ที่ต้องการสแกน (กำหนดได้ถึง 4)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <div class="rule-box">
+                <h3 style="color:var(--color-accent-purple);"><i class="fa-solid fa-code"></i> ตัวอย่างการตั้งค่า:</h3>
+                <p>ฮีโร่: <code>name1=Anya=Anya</code></p>
+                <p>เกียร์: <code>gear1=Thorn+Hairband=ThornP</code></p>
+                <p style="margin-top: 10px;"><em>*ชื่อที่อยู่หลัง = จะถูกใช้เป็นชื่อไฟล์ไอดีที่บอทเก็บไว้</em></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 16: วิธีตั้งชื่อ hero/gear pattern ใน Config.ini -->
+<div class="slide-container" id="slide16">
+    <h2>วิธีตั้งชื่อ Hero/Gear Pattern</h2>
+    <p>การกำหนดรูปแบบชื่อฮีโร่/เกียร์เพื่อใช้ในการสแกน (OCR) มีหลักการดังนี้:</p>
+
+    <div class="content-grid">
+        <div>
+            <div class="rule-box" style="border-color: var(--color-accent-green); background-color: rgba(34, 197, 94, 0.1);">
+                <h3 style="color: var(--color-accent-green);"><i class="fa-solid fa-key"></i> กติกาการเขียนชื่อ</h3>
+                <ul>
+                    <li>**<code>+</code>**: บังคับว่า "ต้องมีคำนี้" (AND)</li>
+                    <li>**<code>-</code>**: บังคับว่า "ห้ามมีคำนี้" (NOT)</li>
+                    <li>**<code>=</code>**: กำหนดชื่อไฟล์ที่จะบันทึก</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <div class="rule-box">
+                <h3 style="color: var(--color-accent-cyan);"><i class="fa-solid fa-vial-circle-check"></i> ตัวอย่างการใช้งานจริง</h3>
+                <p>ค้นหา: <code>name1=Fairy+Cony-Hood=FairyCony</code></p>
+                <p style="margin-top: 5px;">*ต้องมี Fairy และ Cony แต่ห้ามมี Hood (เซฟเป็น FairyCony)</p>
+                <p style="margin-top: 15px;">ค้นหา: <code>gear2=Rudo+Gas+Mask=Rudo</code></p>
+                <p style="margin-top: 5px;">*ต้องมี Rudo, Gas, Mask (เซฟเป็น Rudo)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 17: การตั้งค่า LinkUrl.ini -->
+<div class="slide-container" id="slide17">
+    <h2><i class="fa-solid fa-link"></i> ไฟล์ LinkUrl.ini – ตั้งค่าลิงก์กิจกรรม</h2>
+    <p>ไฟล์ `LinkUrl.ini` อยู่ในโฟลเดอร์ `bin` ใช้สำหรับใส่ URL ของกิจกรรมที่เกมแจก เพื่อให้บอทเข้าไปกดรับของอัตโนมัติ</p>
+
+    <div class="content-grid">
+        <div style="grid-column: span 2;">
+            <div class="rule-box">
+                <h3 style="color:var(--color-accent-purple);">โครงสร้างและการใช้งาน:</h3>
+                <pre style="background-color:#000; padding:10px; border-radius:4px; overflow-x:auto;"><code>[link]
+URL01=https://jackz2shop.shop/
+URL02=0
+URL03=0
+URL04=0
+URL05=0</code></pre>
+                <p style="margin-top: 10px;">*ให้แทนที่ <code>0</code> ด้วยลิงก์เต็ม (ต้องเริ่มด้วย <code>https://</code>) และ **ห้ามลบบรรทัด URL01–URL05 ทิ้งเด็ดขาด** ถ้าไม่ใช้ให้ใส่ <code>0</code> แทน</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 18: วิธีเริ่มใช้งานบอท (Flow เริ่มต้น) -->
+<div class="slide-container" id="slide18">
+    <h2><i class="fa-solid fa-play"></i> วิธีเริ่มใช้งานบอท (Quick Start)</h2>
+    <div class="styled-list">
+        <ul>
+            <li>**ขั้นตอนที่ 1: เตรียม Emulator** ติดตั้งและตั้งค่า MuMu/Emulator ตามที่โปรแกรมแนะนำ</li>
+            <li>**ขั้นตอนที่ 2: เชื่อมต่อ ADB** ใช้ฟังก์ชัน <code>[02] ADB CONNECT BY JACKZ2</code> และ (ถ้าจำเป็น) <code>[98] Autosetup mumu</code></li>
+            <li>**ขั้นตอนที่ 3: ตั้งค่า Config** ตรวจสอบ <code>Config.ini</code> และ <code>LinkUrl.ini</code> ให้เรียบร้อย (ถ้าแก้ไข ให้ปิดแล้วเปิดบอทใหม่)</li>
+            <li>**ขั้นตอนที่ 4: เตรียมไฟล์ ID** จัดเตรียมไฟล์ไอดี/ไฟล์ XML/TXT ตามโหมดที่จะใช้</li>
+            <li>**ขั้นตอนที่ 5: เลือกหมวดและรัน** เลือกฟังก์ชันที่ต้องการ (AutoLogin / BOTREID / BOTGEAR) แล้วกดเริ่มรัน</li>
+            <li>**ขั้นตอนที่ 6: ตรวจผลลัพธ์** ตรวจสอบผลลัพธ์ตามโฟลเดอร์และ log ที่บอทสร้างให้</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 19: เคล็ดลับ & ทริกการใช้งาน -->
+<div class="slide-container" id="slide19">
+    <h2 style="color:var(--color-accent-green);"><i class="fa-solid fa-lightbulb"></i> เคล็ดลับ & ทริกการใช้งาน (Pro Tips)</h2>
+    <div class="content-grid">
+        <div>
+            <h3 style="color:var(--color-accent-cyan);">Combo โหมดที่แนะนำ</h3>
+            <div class="styled-list">
+                <ul>
+                    <li>**AutoLogin (Fast7Days) + Login to Random (7 Days)**: ใช้เก็บ 7Days ให้ครบก่อน แล้วค่อยสุ่มตัวต่อเพื่อไม่ให้พลาดบัฟ</li>
+                    <li>**GENID + REID / REGEAR**: สร้างไอดีใหม่จำนวนมากด้วย GENID แล้วใช้โหมด REID ไล่สุ่มหาไอดีเทพ/เกียร์เทพ</li>
+                </ul>
+            </div>
+        </div>
+        <div class="rule-box" style="border-color: #f59e0b; background-color: rgba(245, 158, 11, 0.1);">
+            <h3 style="color: #f59e0b;"><i class="fa-solid fa-bell"></i> ข้อควรระวังสำคัญ</h3>
+            <p><strong>การสำรองไฟล์:</strong> ควรสำรองไฟล์ ID และไฟล์สำคัญก่อนใช้โหมดที่มีการลบไอดี (REID/REGEAR) เสมอ</p>
+            <p style="margin-top: 10px;"><strong>สเปกเครื่อง:</strong> สเปกเครื่องไม่สูง อาจต้องลดจำนวน Emulator ในการทำงานพร้อมกันเพื่อประสิทธิภาพสูงสุด</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 20: สรุปข้อดีของ JEABDOOKDUI -->
+<div class="slide-container" id="slide20">
+    <h2 style="color:var(--color-accent-purple);"><i class="fa-solid fa-crown"></i> สรุปข้อดีของ JEABDOOKDUI</h2>
+    <div class="styled-list">
+        <ul style="grid-template-columns: 1fr; display: grid;">
+            <li>**ประหยัดเวลามหาศาล:** ไม่ต้องนั่งคลิกเองทีละไอดี บอทจัดการกิจวัตรประจำวันทั้งหมดอัตโนมัติ</li>
+            <li>**รองรับการทำงานหลายจอ:** จัดการได้พร้อมกันหลายสิบ–หลายร้อยไอดี (ขึ้นอยู่กับสเปก PC)</li>
+            <li>**ฟังก์ชันครบวงจร:** มีหมวดให้เลือกครบทั้ง AutoLogin, Random, REID, Gear และ Utilities</li>
+            <li>**ปรับแต่งได้ละเอียด:** มีระบบ Config.ini และ LinkUrl.ini ให้ปรับแต่งการทำงานตามเงื่อนไขที่ต้องการ</li>
+            <li>**เหมาะกับทุกสาย:** ตอบโจทย์ทั้งผู้เล่นสายฟาร์มเอง และสายรับจ้างจัดไอดี/ขายไอดี</li>
+        </ul>
+    </div>
+</div>
+
+<!-- Slide 21: ช่องทางติดต่อ & ซื้อบอท -->
+<div class="slide-container" id="slide21">
+    <div class="contact-info">
+        <h1>สนใจใช้งาน JEABDOOKDUI ?</h1>
+        <h3 style="color:var(--color-accent-cyan);">ยกระดับการจัดการไอดีสู่ระดับมืออาชีพ</h3>
+
+        <div class="highlight-box" style="width: 80%; margin: 20px auto;">
+            <p style="font-size: 1.5em; font-weight: bold; color:#fff;">💰 500 บาท / เดือน – ใช้ได้ไม่จำกัดเครื่อง</p>
+        </div>
+        
+        <h3 style="color:var(--color-accent-purple); margin-top: 40px;">ช่องทางการติดต่อและซื้อบอท</h3>
+        <div style="margin-top: 30px; display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+            <a href="https://www.facebook.com/profile.php?id=61566873689009" target="_blank" rel="noopener" class="contact-link" style="text-decoration:none; color:white; display:inline-flex; align-items:center; gap:10px; background-color: #3b5998; padding:12px 20px; border-radius:8px;"><i class="fa-brands fa-facebook"></i> Facebook Page</a>
+            <a href="https://discord.gg/UKZhwQ99E8" target="_blank" rel="noopener" class="contact-link" style="text-decoration:none; color:white; display:inline-flex; align-items:center; gap:10px; background-color: #7289da; padding:12px 20px; border-radius:8px;"><i class="fa-brands fa-discord"></i> Discord Server</a>
+            <a href="https://jackz2shop.shop/" target="_blank" rel="noopener" class="contact-link" style="text-decoration:none; color:white; display:inline-flex; align-items:center; gap:10px; background-color: #ff6b35; padding:12px 20px; border-radius:8px;"><i class="fa-solid fa-shopping-bag"></i> Shop</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
